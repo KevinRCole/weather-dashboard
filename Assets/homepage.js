@@ -1,13 +1,21 @@
 var APIKey = "1dbcf8290ea4ecbce96bed0c6567bd75";
+
 var cityNameFormEl = document.querySelector("#user-form");
-var cityNameInputEL = document. querySelector("#username");
+var cityNameInputEL = document.querySelector("#username");
+var cityLat = "";
+var cityLon = "";
 // var city = "Austin";
+var weatherDataArray = [];
+
+
+
 
 var formSubmitHandler = function (event) {
   event.preventDefault();
 
   var cityName = cityNameInputEL.value.trim();
-  console.log(cityName);
+  // console.log(cityName);
+  // console.log(typeof(cityName));
 
   if (cityName) {
     getCityWeather(cityName);
@@ -18,34 +26,69 @@ var formSubmitHandler = function (event) {
 }
 
 
-var getCityWeather = function (city) {
-  var queryURL = "http://api.openweathermap.org/data/2.5/weather?q=" + city + "&appid=" + APIKey;
+  var getCityWeather = function (city) {
 
-  fetch(queryURL)
-    .then(function (response) {
-      return response.json();
-      })
-      .then(function (data) {
+    // var queryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&cnt=10" + "&appid=" + APIKey;
+
+    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&appid=" + APIKey;
+    
+    // First, fetch openWeather data for a the current day of the city the user submits
+
+    fetch(queryURL)
+      .then(function (response) {
+        return response.json();
+        })
+        .then(function (data) {
         console.log(data);
-        console.log(data.wind.speed);
+        // console.log(data.wind.speed);
   
-        var windSpeed = data.wind.speed;
-        console.log(windSpeed);
+        // var windSpeed = data.wind.speed;
+        // console.log(windSpeed);
   
-        var longitude = data.coord.lon;
-        console.log(longitude);
-  
-        var latitude = data.coord.lat;
-        console.log(latitude);
-  
-        var temp = data.main.temp;
-        console.log(temp);
-  
-        var humidity = data.main.humidity;
-        console.log(humidity);
-  
+        var cityLon = data.coord.lon;
+        // console.log("longitude:")
+        // console.log(cityLon);
         
-      })};    
+  
+        var cityLat = data.coord.lat;
+        // console.log("what type of object is latitude?")
+        // console.log(typeof(cityLat));
+  
+        // var temp = data.main.temp;
+        // console.log(temp);
+  
+        // var humidity = data.main.humidity;
+        // console.log(humidity);
+
+
+
+      //  the preceding fetch(queryURL) returned weather data for the selected city for the current date, and that data includes the latitude and longitude coordinates, which we can use to fetch forecast data five days out -- this forecast data also includes data for current date
+    
+
+      var queryForecastURL = "https://api.openweathermap.org/data/2.5/forecast?lat=" + cityLat + "&lon=" + cityLon + "&units=imperial" + "&cnt=40" + "&appid=" + APIKey;
+
+      fetch(queryForecastURL)
+        .then(function (response) {
+          return response.json();
+          })
+         .then(function (data) {
+          // console.log(data);
+          var weatherDataArray = data;
+          // console.log(weatherDataArray);
+          var currentDayWeather = weatherDataArray.list[0];
+          var forecastDay1 = weatherDataArray.list[7];
+          var forecastDay2 = weatherDataArray.list[15];
+          var forecastDay3 = weatherDataArray.list[23];
+          var forecastDay4 = weatherDataArray.list[31];
+          var forecastDay5 = weatherDataArray.list[39];
+
+
+          console.log(currentDayWeather);
+          console.log(forecastDay1);
+          console.log(forecastDay2);
+          console.log(forecastDay3);
+          console.log(forecastDay4);
+          console.log(forecastDay5);
 
 
 
@@ -55,25 +98,27 @@ var getCityWeather = function (city) {
 
 
 
-// function getApi() {
-//   // fetch request gets a list of all the repos for the node.js organization
-//   var requestUrl = 'https://api.github.com/orgs/nodejs/repos';
+          })
+            
+      });
+    }
 
-  // fetch(queryURL)
-  //   .then(function (response) {
-  //     return response.json();
-  //   })
+    cityNameFormEl.addEventListener('submit', formSubmitHandler);
+
+    
+    
+    
+    
     
 
 
-  // api.openweathermap.org/data/2.5/weather?q={city name}&appid={API key}
 
 
-    // five-day forecast:
-    // api.openweathermap.org/data/2.5/forecast?lat={lat}&lon={lon}&appid={API key}
 
 
-    // var checkPoint = data.
+
+
+
 
     // console.log(checkPoint);
     //   //Loop over the data to generate a table, each table row will have a link to the repo url
@@ -104,5 +149,5 @@ var getCityWeather = function (city) {
 
 
 
-cityNameFormEl.addEventListener('submit', formSubmitHandler);
+// cityNameFormEl.addEventListener('submit', formSubmitHandler);
 // languageButtonsEl.addEventListener('click', buttonClickHandler);
