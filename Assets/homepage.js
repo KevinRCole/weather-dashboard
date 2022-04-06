@@ -28,18 +28,17 @@ var formSubmitHandler = function (event) {
 
   var getCityWeather = function (city) {
 
-    // var queryURL = "https://api.openweathermap.org/data/2.5/forecast/daily?q=" + city + "&cnt=10" + "&appid=" + APIKey;
+        var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&appid=" + APIKey;
 
-    var queryURL = "https://api.openweathermap.org/data/2.5/weather?q=" + city + "&units=imperial" + "&appid=" + APIKey;
-    
-    // First, fetch openWeather data for a the current day of the city the user submits
+        // First, fetch openWeather data for a the current day of the city the user submits
 
     fetch(queryURL)
       .then(function (response) {
         return response.json();
         })
         .then(function (data) {
-        console.log(data);
+          console.log("today's weather data:")
+          console.log(data);
         // console.log(data.wind.speed);
   
         // var windSpeed = data.wind.speed;
@@ -64,31 +63,39 @@ var formSubmitHandler = function (event) {
 
       //  the preceding fetch(queryURL) returned weather data for the selected city for the current date, and that data includes the latitude and longitude coordinates, which we can use to fetch forecast data five days out -- this forecast data also includes data for current date
     
+   
+      var queryForecastURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon + "&units=imperial" + "&appid=" + APIKey;
 
-      var queryForecastURL = "https://api.openweathermap.org/data/2.5/forecast?lat=" + cityLat + "&lon=" + cityLon + "&units=imperial" + "&cnt=40" + "&appid=" + APIKey;
-
+         
       fetch(queryForecastURL)
         .then(function (response) {
           return response.json();
           })
          .then(function (data) {
-          // console.log(data);
+         
+        //  This "one call" returns current weather data, plus an 8-day forecast, and we just need to access the first 5 days of that eight day forecast
+
+          console.log("One call weather data:");
+          console.log(data);
           var weatherDataArray = data;
-          // console.log(weatherDataArray);
-          var currentDayWeather = weatherDataArray.list[0];
-          var forecastDay1 = weatherDataArray.list[7];
-          var forecastDay2 = weatherDataArray.list[15];
-          var forecastDay3 = weatherDataArray.list[23];
-          var forecastDay4 = weatherDataArray.list[31];
-          var forecastDay5 = weatherDataArray.list[39];
-
-
-          console.log(currentDayWeather);
+        
+          console.log(weatherDataArray);
+          var currentWeather = weatherDataArray.current;
+          var forecastDay1 = weatherDataArray.daily[1];
+          var forecastDay2 = weatherDataArray.daily[2];
+          var forecastDay3 = weatherDataArray.daily[3];
+          var forecastDay4 = weatherDataArray.daily[4];
+          var forecastDay5 = weatherDataArray.daily[5];  
+          console.log("Today's weather:");
+          console.log(currentWeather);
+          console.log("Forecast day one:");
           console.log(forecastDay1);
           console.log(forecastDay2);
           console.log(forecastDay3);
           console.log(forecastDay4);
           console.log(forecastDay5);
+
+        
 
 
 
@@ -103,7 +110,7 @@ var formSubmitHandler = function (event) {
       });
     }
 
-    cityNameFormEl.addEventListener('submit', formSubmitHandler);
+    cityNameFormEl.addEventListener('click', formSubmitHandler);
 
     
     
