@@ -2,8 +2,14 @@ var APIKey = "1dbcf8290ea4ecbce96bed0c6567bd75";
 
 var cityNameFormEl = document.querySelector("#user-form");
 var cityNameInputEL = document.querySelector("#username");
-var cityLat = "";
-var cityLon = "";
+
+var presentDate = moment().format('MM/DD/YYYY');
+document.getElementById("current-date").textContent=presentDate;
+
+
+
+// var cityLat = "";
+// var cityLon = "";
 // var city = "Austin";
 var weatherDataArray = [];
 
@@ -16,10 +22,12 @@ var formSubmitHandler = function (event) {
   var cityName = cityNameInputEL.value.trim();
   // console.log(cityName);
   // console.log(typeof(cityName));
-
+  
   if (cityName) {
     getCityWeather(cityName);
-
+    document.getElementById("city-searched-for").textContent = cityName;
+    // document.getElementById("current-date").textContent = presentDate;
+  
   } else {
     alert("Please enter the name of a City");
   } 
@@ -37,31 +45,15 @@ var formSubmitHandler = function (event) {
         return response.json();
         })
         .then(function (data) {
-          console.log("today's weather data:")
-          console.log(data);
-        // console.log(data.wind.speed);
-  
-        // var windSpeed = data.wind.speed;
-        // console.log(windSpeed);
-  
+          console.log("today's weather data:", data);
+          
+       
         var cityLon = data.coord.lon;
-        // console.log("longitude:")
-        // console.log(cityLon);
         
-  
         var cityLat = data.coord.lat;
-        // console.log("what type of object is latitude?")
-        // console.log(typeof(cityLat));
-  
-        // var temp = data.main.temp;
-        // console.log(temp);
-  
-        // var humidity = data.main.humidity;
-        // console.log(humidity);
+        
 
-
-
-      //  the preceding fetch(queryURL) returned weather data for the selected city for the current date, and that data includes the latitude and longitude coordinates, which we can use to fetch forecast data five days out -- this forecast data also includes data for current date
+      //  use the longitude and latitude coordinates from the preceding fetch(queryURL) in a "onecall" fetch of current data and 8-day forecast 
     
    
       var queryForecastURL = "https://api.openweathermap.org/data/2.5/onecall?lat=" + cityLat + "&lon=" + cityLon + "&units=imperial" + "&appid=" + APIKey;
@@ -72,11 +64,23 @@ var formSubmitHandler = function (event) {
           return response.json();
           })
          .then(function (data) {
-         
-        //  This "one call" returns current weather data, plus an 8-day forecast, and we just need to access the first 5 days of that eight day forecast
 
-          console.log("One call weather data:");
           console.log(data);
+         
+          
+        //  The "one call" returns current weather data, plus an 8-day forecast, and we need to access the first 5 days of that eight day forecast
+        
+        // render this date to the HTML page.
+          
+          document.getElementById("current-temp").textContent = data.current.temp; 
+          document.getElementById("current-wind-speed").textContent = data.current.wind_speed;
+          document.getElementById("current-humidity").textContent=data.current.humidity;
+          document.getElementById("current-uvi").textContent=data.current.uvi;
+        
+        
+        
+        console.log("One call weather data:", data);
+          // console.log(data);
           var weatherDataArray = data;
         
           console.log(weatherDataArray);
@@ -110,7 +114,7 @@ var formSubmitHandler = function (event) {
       });
     }
 
-    cityNameFormEl.addEventListener('click', formSubmitHandler);
+    cityNameFormEl.addEventListener('submit', formSubmitHandler);
 
     
     
