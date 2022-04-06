@@ -72,32 +72,20 @@ var formSubmitHandler = function (event) {
         
         // render this date to the HTML page.
           
-          document.getElementById("current-temp").textContent = data.current.temp; 
+          document.getElementById("current-temp").textContent = data.current.temp + "\u00B0"; 
           document.getElementById("current-wind-speed").textContent = data.current.wind_speed;
           document.getElementById("current-humidity").textContent=data.current.humidity;
           document.getElementById("current-uvi").textContent=data.current.uvi;
         
-        
-        
-        console.log("One call weather data:", data);
-          // console.log(data);
-          var weatherDataArray = data;
-        
-          console.log(weatherDataArray);
-          var currentWeather = weatherDataArray.current;
-          var forecastDay1 = weatherDataArray.daily[1];
-          var forecastDay2 = weatherDataArray.daily[2];
-          var forecastDay3 = weatherDataArray.daily[3];
-          var forecastDay4 = weatherDataArray.daily[4];
-          var forecastDay5 = weatherDataArray.daily[5];  
-          console.log("Today's weather:");
-          console.log(currentWeather);
-          console.log("Forecast day one:");
-          console.log(forecastDay1);
-          console.log(forecastDay2);
-          console.log(forecastDay3);
-          console.log(forecastDay4);
-          console.log(forecastDay5);
+        // document.getElementById
+
+          // var forecastDay1 = data.daily[1];
+
+          for (let i = 0; i <= 4; i++) {
+            document.getElementById("temp-forecast-" + String(i + 1)).textContent = data.daily[i].temp.day + "\u00B0";
+            document.getElementById("wind-forecast-" + String(i + 1)).textContent = data.daily[i].wind_speed;
+            document.getElementById("humidity-forecast-" + String(i + 1)).textContent = data.daily[i].humidity;
+          }
 
         
 
