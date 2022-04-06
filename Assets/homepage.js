@@ -4,9 +4,22 @@ var cityNameFormEl = document.querySelector("#user-form");
 var cityNameInputEL = document.querySelector("#username");
 
 var presentDate = moment().format('MM/DD/YYYY');
-document.getElementById("current-date").textContent=presentDate;
+var forecastDatePlus1 = moment().add(1, "days").format('MM/DD/YYYY');
+var forecastDatePlus2 = moment().add(2, "days").format('MM/DD/YYYY');
+var forecastDatePlus3 = moment().add(3, "days").format('MM/DD/YYYY');
+var forecastDatePlus4 = moment().add(4, "days").format('MM/DD/YYYY');
+var forecastDatePlus5 = moment().add(5, "days").format('MM/DD/YYYY');
+
+document.getElementById("current-date").textContent = presentDate;
+document.getElementById("forecast-day-1").textContent = forecastDatePlus1;
+document.getElementById("forecast-day-2").textContent = forecastDatePlus2;
+document.getElementById("forecast-day-3").textContent = forecastDatePlus3;
+document.getElementById("forecast-day-4").textContent = forecastDatePlus4;
+document.getElementById("forecast-day-5").textContent = forecastDatePlus5;
 
 
+
+// var travelTime = moment().add(1, 'days').format('MM DD YYYY')
 
 // var cityLat = "";
 // var cityLon = "";
@@ -88,7 +101,7 @@ var formSubmitHandler = function (event) {
           }
 
         
-
+          
 
 
 
