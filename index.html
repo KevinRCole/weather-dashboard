@@ -38,7 +38,7 @@
       <div id="current-city-results">
         <h1 id="currentCityName" class="searchedCityCard"> <span id="city-searched-for">City Searched</span> <span id="current-date">00/00/00</span> <img src="https://openweathermap.org/img/wn/10d@2x.png" alt="weather icon" width="50" height="40"> </h1>
         <br/>
-        <h3>Temp: <span id="current-temp">00.00</span>&degF</h3>
+        <h3>Temp: <span id="current-temp"></span></h3>
         <br/>
         <h3>Wind: <span id="current-wind-speed">00.00</span> MPH</h3>
         <br/>
@@ -53,24 +53,39 @@
         <br/>
         <div class="forecast-cards">
                
-            <div id="first-day-forecasted" class="forecast-card">
+            <div id="first-day-forecast" class="forecast-card">
                 <h3 id="dayOneForecast">One day out.</h3>
+                <p>Temp: <span id="temp-forecast-1"></span></p>
+                <p>Wind-speed: <span id="wind-forecast-1"></span></p>
+                <p>Humidity: <span id="humidity-forecast-1"></span></p>
             </div>
 
-            <div id="second-day-forecasted" class="forecast-card">
+            <div id="second-day-forecast" class="forecast-card">
                <h3 id="dayTwoForecast">Two days out.</h3>
-            </div>
-
-            <div id="third-day-forecasted" class="forecast-card">
-                <h3 id="dayThreeForecast">Three days out.</h3>
-            </div>
-
-            <div id="fourth-day-forecasted" class="forecast-card">
-              <h3 id="dayFourForecast">Four days out.</h3>
+                <p>Temp: <span id="temp-forecast-2"></span></p>
+                <p>Wind-speed: <span id="wind-forecast-2"></span></p>
+                <p>Humidity: <span id="humidity-forecast-2"></span></p>
             </div>
             
-            <div id="fifth-day-forecasted" class="forecast-card">
+            <div id="third-day-forecast" class="forecast-card">
+                <h3 id="dayThreeForecast">Three days out.</h3>
+                <p>Temp: <span id="temp-forecast-3"></span></p>
+                <p>Wind-speed: <span id="wind-forecast-3"></span></p>
+                <p>Humidity: <span id="humidity-forecast-3"></span></p>
+            </div>
+
+            <div id="fourth-day-forecast" class="forecast-card">
+              <h3 id="dayFourForecast">Four days out.</h3>
+              <p>Temp: <span id="temp-forecast-4"></span></p>
+              <p>Wind-speed: <span id="wind-forecast-4"></span></p>
+              <p>Humidity: <span id="humidity-forecast-4"></span></p>
+             </div>
+            
+            <div id="fifth-day-forecast" class="forecast-card">
               <h3 id="dayFiveForecast">Five days out.</h3>
+              <p>Temp: <span id="temp-forecast-5"></span></p>
+              <p>Wind-speed: <span id="wind-forecast-5"></span></p>
+              <p>Humidity: <span id="humidity-forecast-5"></span></p>
           </div>
       </div>
         
